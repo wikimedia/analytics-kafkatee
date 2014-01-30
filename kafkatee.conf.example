@@ -7,8 +7,8 @@
 #                                                                     #
 # Syntax:                                                             #
 #  <property-name> = <value>                                          #
-#  input <type args..>						      #
-#  output <type arg..>						      #
+#  input <type args..>                                                #
+#  output <type arg..>                                                #
 #                                                                     #
 # Boolean property values:                                            #
 #   >0, "true", "yes", "on", "" - interpreted as true                 #
@@ -16,10 +16,10 @@
 #                                                                     #
 #                                                                     #
 # The configuration file consists of:                                 #
-#   - Configuration properties (key = value) to control various	      #
-#     aspects of kafkatee.					      #
-#   - Inputs							      #
-#   - Outputs							      #
+#   - Configuration properties (key = value) to control various       #
+#     aspects of kafkatee.                                            #
+#   - Inputs                                                          #
+#   - Outputs                                                         #
 #                                                                     #
 #######################################################################
 
@@ -81,31 +81,31 @@
 #######################################################################
 #                                                                     #
 # Message transformation                                              #
-#								      #
+#                                                                     #
 # A message read from one of the inputs may be transformed before     #
-# being enqueued on the output queues.				      #
-#								      #
+# being enqueued on the output queues.                                #
+#                                                                     #
 # Transformation requires that the input and output encoding differs, #
-# i.e., 'input [encoding=json] ..' and 'output.encoding=string'	      #
-#								      #
-# While the input encoding is configured per input, the output	      #
+# i.e., 'input [encoding=json] ..' and 'output.encoding=string'       #
+#                                                                     #
+# While the input encoding is configured per input, the output        #
 # encoding is configured globally, all outputs will receive the same  #
-# message.							      #
-#								      #
-# The currently supported transformation(s) are:		      #
-#  JSON input -> string output:					      #
-#    JSON data is formatted according to the output.format	      #
+# message.                                                            #
+#                                                                     #
+# The currently supported transformation(s) are:                      #
+#  JSON input -> string output:                                       #
+#    JSON data is formatted according to the output.format            #
 #    configuration. The %{field} syntax references the field in the   #
 #    original JSON object by the same name and outputs its value.     #
-#								      #
+#                                                                     #
 # If the input and output encoding matches then the message remains   #
-# untouched.							      #
-#								      #
-# The output message delimiter (defaults to newline (\n)) is	      #
+# untouched.                                                          #
+#                                                                     #
+# The output message delimiter (defaults to newline (\n)) is          #
 # configurable (output.delimiter) and always appended to all output   #
-# messages regardless of transformation.			      #
+# messages regardless of transformation.                              #
 # The input is always stripped of its delimiter (which is newline     #
-# for pipe inputs).						      #
+# for pipe inputs).                                                   #
 #                                                                     #
 #######################################################################
 
@@ -117,28 +117,28 @@
 
 #######################################################################
 # Output formatting                                                   #
-#								      #
-# The format string is made up of %{..}-tokens and literals.	      #
-#								      #
-# Tokens:							      #
-#								      #
-#  %{FIELD}							      #
-#    Retrieves the value from the JSON object's field with the	      #
-#    same name.							      #
-#								      #
-#  %{FIELD?DEFAULT}                                            	      #
+#                                                                     #
+# The format string is made up of %{..}-tokens and literals.          #
+#                                                                     #
+# Tokens:                                                             #
+#                                                                     #
+#  %{FIELD}                                                           #
+#    Retrieves the value from the JSON object's field with the        #
+#    same name.                                                       #
+#                                                                     #
+#  %{FIELD?DEFAULT}                                                   #
 #    'DEFAULT' is the default string to use if no field was matched,  #
 #     the default default string is "-".                              #
 #                                                                     #
 #  Literals are copied verbatim to the output string.                 #
-#								      #
-#  Example JSON: {"task":19, "name":"Mike"}			      #
-#  Example format: Got task %{task} for user %{name?unknown}	      #
-#  Example output: Got task 19 for user Mike			      #
+#                                                                     #
+#  Example JSON: {"task":19, "name":"Mike"}                           #
+#  Example format: Got task %{task} for user %{name?unknown}          #
+#  Example output: Got task 19 for user Mike                          #
 #                                                                     #
 # Note: Multi-level JSON objects are flattened:                       #
-#       JSON:  {"a": {"b": 9}, "c": "hi"}                              #
-#       Gives: { "b": 9, "c": "hi" }				      #
+#       JSON:  {"a": {"b": 9}, "c": "hi"}                             #
+#       Gives: { "b": 9, "c": "hi" }                                  #
 #                                                                     #
 #######################################################################
 
@@ -165,9 +165,9 @@
 
 
 #######################################################################
-#								      #
-# Misc configuration						      #
-#								      #
+#                                                                     #
+# Misc configuration                                                  #
+#                                                                     #
 #######################################################################
 
 # Pid file location
@@ -212,41 +212,41 @@
 #  - Piped command                                                    #
 #                                                                     #
 # Any number and mix of inputs can be configured.                     #
-# Each input may be configured with an optional list of		      #
+# Each input may be configured with an optional list of               #
 # input-specific configuration properties, called the key-values.     #
-#								      #
-# Supported key-values:					              #
+#                                                                     #
+# Supported key-values:                                               #
 #  - encoding=string|json     - message encoding from this input.     #
-#                               Default: string			      #
-#								      #
+#                               Default: string                       #
+#                                                                     #
 #  - stop.eof=true|false      - do not continue try reading from      #
 #                               this input when EOF has been reached  #
-#                               Default: false			      #
-#								      #
+#                               Default: false                        #
+#                                                                     #
 #  - stop.error=true|false    - do not reopen/restart input on error. #
-#                               Default: false			      #
-#								      #
+#                               Default: false                        #
+#                                                                     #
 # The key-values is CSV-separated and the list of key-values must be  #
-# enveloped by brackets: [encoding=string,foo=bar]		      #
-#								      #
+# enveloped by brackets: [encoding=string,foo=bar]                    #
+#                                                                     #
 #######################################################################
 
 #######################################################################
-# Kafka consumer input syntax:					      #
+# Kafka consumer input syntax:                                        #
 #  input [key-values] kafka topic <topic> partition <N> from <offset> #
-#								      #
-# where:							      #
+#                                                                     #
+# where:                                                              #
 #  - [key-values] is an optional CSV-separated list of key-values.    #
-#    NOTE: the enveloping brackets are literal.			      #
-#  - <topic> is the Kafka topic to consume from.		      #
+#    NOTE: the enveloping brackets are literal.                       #
+#  - <topic> is the Kafka topic to consume from.                      #
 #  - <N> or <N>-<M> is the partition, or range of partitions, to      #
-#    consume from.						      #
-#  - <offset> is the offset to start consuming from.		      #
-#    supported values: beginning, end, stored, <number>		      #
+#    consume from.                                                    #
+#  - <offset> is the offset to start consuming from.                  #
+#    supported values: beginning, end, stored, <number>               #
 #    Where 'stored' means to use a local offset file to store and     #
-#    read the offset from, which allows a later run of kafkatee	      #
-#    to pick up from where it left off.				      #
-#								      #
+#    read the offset from, which allows a later run of kafkatee       #
+#    to pick up from where it left off.                               #
+#                                                                     #
 #######################################################################
 
 #input [encoding=json] kafka topic varnish partition 0-10 from stored
@@ -254,15 +254,15 @@
 
 
 #######################################################################
-# Piped command input syntax:					      #
-#  input [key-values] pipe <command ...>			      #
-#								      #
-# where:							      #
+# Piped command input syntax:                                         #
+#  input [key-values] pipe <command ...>                              #
+#                                                                     #
+# where:                                                              #
 #  - [key-values] is an optional CSV-separated list of key-values.    #
-#    NOTE: the enveloping brackets are literal.			      #
+#    NOTE: the enveloping brackets are literal.                       #
 #  - <command ...> is a command string that will be executed with:    #
-#      /bin/sh -c "<command ...>", thus supporting pipes, etc.	      #
-#								      #
+#      /bin/sh -c "<command ...>", thus supporting pipes, etc.        #
+#                                                                     #
 #######################################################################
 
 #input [encoding=string] pipe tail -f a.log | grep -v ^DEBUG:
@@ -284,12 +284,12 @@
 # Each output has its own queue where messages are enqueued prior to  #
 # writing to the output, this queue is limited by output.queue.size.  #
 # If the queue limit is reached no new messages are added to the      #
-# queue (tail-drop).
-#								      #
+# queue (tail-drop).                                                  #
+#                                                                     #
 # Outputs are configured with a sample rate, 1 means every message,   #
 # 2 means every other message, 1000 means every 1000nd message, and   #
-# so on.							      #
-#
+# so on.                                                              #
+#                                                                     $
 # If an output process terminates, or an output file fails writing,   #
 # the output is closed and reopened/restarted. The messages in the    #
 # output's queue remain in the queue while the output is unavailable. #
@@ -300,15 +300,15 @@
 #######################################################################
 # Piped command output syntax:                                        #
 #  output pipe <sample-rate> <command ...>                            #
-#								      #
-# where:							      #
-#  - <sample-rate> is the sample-rate: 1 for each message, 100 for    #
-#    every 100rd message, and so on.				      #
-#  - <command ...> is a command string that will be executed with:    #
-#      /bin/sh -c "<command ...>", thus supporting pipes, etc.	      #
 #                                                                     #
-# Output pipes are stopped and restarted if kafkatee receives a	      #
-# SIGHUP signal.						      #
+# where:                                                              #
+#  - <sample-rate> is the sample-rate: 1 for each message, 100 for    #
+#    every 100rd message, and so on.                                  #
+#  - <command ...> is a command string that will be executed with:    #
+#      /bin/sh -c "<command ...>", thus supporting pipes, etc.        #
+#                                                                     #
+# Output pipes are stopped and restarted if kafkatee receives a       #
+# SIGHUP signal.                                                      #
 #######################################################################
 
 #output pipe 1 grep ^Something >> somefile.log
@@ -319,14 +319,14 @@
 #######################################################################
 # File output syntax:                                                 #
 #  output file <sample-rate> <path>                                   #
-#								      #
-# where:							      #
+#                                                                     #
+# where:                                                              #
 #  - <sample-rate> is the sample-rate: 1 for each message, 100 for    #
-#    every 100rd message, and so on.				      #
+#    every 100rd message, and so on.                                  #
 #  - <path> is the file path to write. The file is appended.          #
 #                                                                     #
-# Output files are closed and reopened if kafkatee receives a	      #
-# SIGHUP signal, thus allowing log file rotation.		      #
+# Output files are closed and reopened if kafkatee receives a         #
+# SIGHUP signal, thus allowing log file rotation.                     #
 #######################################################################
 
 #output file 100 /tmp/sampled-100.txt
