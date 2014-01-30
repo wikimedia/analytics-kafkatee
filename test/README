@@ -1,0 +1,33 @@
+Automated regression tests for kafkatee
+=======================================
+
+Each test is implemented as a standard kafkatee configuration file named
+"test-*.conf".
+
+A local configuration file must be written, use local.conf.example as template.
+
+
+Run all tests:
+
+   make
+
+
+Run specific tests:
+
+    TESTS="first.conf second.conf" make
+
+
+
+
+Prerequisits:
+* Kafka broker where the topic "kafkatee_test" exists with 10 partitions.
+* A configuration file for local configuration: local.conf
+* The rdkafka_example tool from librdkafka must be in $PATH
+
+
+Tools:
+* testpipe.py generates input for kafkatee and checks the output from it,
+  verifying the number of messages, contents and order.
+* linecnt simply counts the number of lines received and performs better
+  than testpipe.py
+* ingen generates simple input and performs better than testpipe.py

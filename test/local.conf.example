@@ -1,0 +1,5 @@
+# Local configuration for tests
+
+# List of Kafka brokers
+kafka.metadata.broker.list = localhost
+

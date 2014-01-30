@@ -1,0 +1,8 @@
+kafkatee
+*~
+.emacs*
+*.d
+*.o
+core
+*.pid
+*.offset
