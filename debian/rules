@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_test:
+	# don't run make tests, tests need Kafka set up to run
+
+override_dh_auto_install:
+	# don't run "make install", use debian/*.install instead
+
+.PHONY: override_dh_auto_test
+.PHONY: override_dh_auto_install

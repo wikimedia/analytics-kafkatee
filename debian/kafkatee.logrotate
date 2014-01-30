@@ -1,0 +1,23 @@
+/var/log/kafkatee.log {
+  daily
+  rotate 7
+  create 0664 syslog adm
+  missingok
+  compress
+  delaycompress
+  postrotate
+    service rsyslog reload
+  endscript
+}
+
+/var/cache/kafkatee/kafkatee.stats.json {
+  weekly
+  rotate 4
+  create 0644 varnishlog root
+  missingok
+  compress
+  delaycompress
+  postrotate
+    service kafkatee reload
+  endscript
+}

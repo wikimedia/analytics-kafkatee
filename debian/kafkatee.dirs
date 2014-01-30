@@ -1,0 +1,4 @@
+etc/kafkatee.d
+var/cache/kafkatee
+var/cache/kafkatee/offsets
+var/run/kafkatee

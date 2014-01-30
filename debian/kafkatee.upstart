@@ -1,0 +1,19 @@
+# kafkatee
+#
+# Apache Kafka consumer with multiple inputs and outputs
+
+description	"kafkatee - Apache Kafka consumer with multiple inputs and outputs"
+
+start on started network-services
+stop on stopping network-services
+
+setuid kafkatee
+setgid kafkatee
+
+# kafkatee uses rsyslog for logs.
+# Connect stdin and stdout to /dev/null.
+console none
+
+respawn
+
+exec /usr/bin/kafkatee -c /etc/kafkatee.conf

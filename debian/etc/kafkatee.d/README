@@ -1,0 +1,3 @@
+This directory should contain individual output and input configuration for
+kafkatee.  Files named *.conf in this directory will be loaded by kafkatee
+in alphabetical order.
