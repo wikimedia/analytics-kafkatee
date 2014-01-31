@@ -45,6 +45,7 @@
 #include <strings.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <glob.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -197,6 +198,8 @@ int ezd_conf_file_read (const char *path,
 	char buf[8192];
 	int line = 0;
 	static int inc_depth = 0;
+	glob_t glob_matches;
+	int g = 0; /* iterator index in glob_matches.gl_pathv */
 
 	if (!(fp = fopen(path, "r"))) {
 		snprintf(errstr, errstr_size,
@@ -290,12 +293,25 @@ int ezd_conf_file_read (const char *path,
 				return -1;
 			}
 
-			if (ezd_conf_file_read(t, conf_set_cb,
-					       errstr+errof, errstr_size-errof,
-					       opaque) == -1) {
+			/* Read in matching include files. */
+			if (glob(t, GLOB_ERR, NULL, &glob_matches) != 0) {
+				snprintf(errstr+errof, errstr_size-errof,
+					 "Failed to read include file pattern '%s'", t);
 				inc_depth--;
 				return -1;
+            }
+
+			/* For each matched include file, call ezd_conf_file_read. */
+			for (g = 0; g < glob_matches.gl_pathc; g++) {
+				if (ezd_conf_file_read(glob_matches.gl_pathv[g], conf_set_cb,
+						errstr+errof, errstr_size-errof,
+						opaque) == -1) {
+					inc_depth--;
+					globfree(&glob_matches);
+					return -1;
+				}
 			}
+			globfree(&glob_matches);
 
 			continue;
 		}
