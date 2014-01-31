@@ -31,6 +31,7 @@
 #include "output.h"
 #include "format.h"
 #include "exec.h"
+#include "ezd.h"
 
 static LIST_HEAD(, input_s) inputs;
 
@@ -92,6 +93,7 @@ static void input_pipe_main (input_t *in) {
 	int status; /* pipe exit status */
 	char errstr[512];
 	char *buf;
+        static int our_rotate_version = 0;
 
 	buf = malloc(conf.input_buf_size);
 
@@ -164,8 +166,10 @@ static void input_pipe_main (input_t *in) {
 				usleep(100000);
 			}
 
-			if (unlikely(conf.rotate))
+			if (unlikely(conf.rotate != our_rotate_version)) {
+                                our_rotate_version = conf.rotate;
 				break;
+                        }
 		}
 
 		_DBG("Input \"%s\" Status=%i, EOF=%i, Error=%i", in->in_name,
@@ -183,7 +187,7 @@ static void input_pipe_main (input_t *in) {
 				conf.run = 0;
 				break;
 			}
-				
+
 		} else if (ferror(fp)) {
 			kt_log(LOG_ERR,
 			       "Input \"%s\" error: %s",
@@ -289,6 +293,8 @@ static void input_kafka_main (input_t *in) {
 static void *input_main (void *arg) {
 	input_t *in = arg;
 
+        ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
+
 	switch (in->in_type)
 	{
 	case INPUT_PIPE:
@@ -299,7 +305,7 @@ static void *input_main (void *arg) {
 		input_kafka_main(in);
 		break;
 	}
-	
+
 	/* Destroy thread-specific renderer */
 	render_destroy();
 

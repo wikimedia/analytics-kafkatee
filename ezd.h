@@ -39,6 +39,7 @@
 
 #pragma once
 
+#include <signal.h>
 
 /**
  * Check and create/open pidfile 'path'.
@@ -130,3 +131,10 @@ void ezd_daemon_started (void);
 
 
 
+/**
+ * SIG_BLOCKs or UNBLOCKs ('how') the given list of signals in
+ * the current thread.
+ * The list of signals must be terminated with -1.
+ * The signal 0 means all signals.
+ */
+int ezd_thread_sigmask (int how, ...);

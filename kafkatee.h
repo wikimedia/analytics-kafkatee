@@ -44,13 +44,8 @@
 
 #include <librdkafka/rdkafka.h>
 
-#if FIXME
 #define KAFKATEE_CONF_PATH     "/etc/kafkatee.conf"
 #define KAFKATEE_PID_FILE_PATH "/var/run/kafkatee.pid"
-#else
-#define KAFKATEE_CONF_PATH     "kafkatee.conf"
-#define KAFKATEE_PID_FILE_PATH "kafkatee.pid"
-#endif
 
 #define _DBG(fmt...) do {			\
 	if (conf.log_level > 6) {		\
@@ -110,7 +105,7 @@ typedef enum {
 
 typedef struct input_s {
 	LIST_ENTRY(input_s)  in_link;
-	
+
 	input_type_t         in_type;
 	encoding_t           in_enc;
 	char                *in_name;

@@ -32,6 +32,7 @@
 #include "queue.h"
 #include "exec.h"
 #include "input.h"
+#include "ezd.h"
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -342,12 +343,12 @@ static void outputs_check (void) {
 	int totqcnt = 0;
 
 	LIST_FOREACH(o, &outputs, o_link) {
-		/* FIXME: remove */
-		if (0)
+#if 0 /* Output queue pressure debugging */
 		_DBG("\"%s\" queue pressure: %i  (rx %"PRIu64", tx %"PRIu64
 		     ", tx qdrop %"PRIu64", fd %i)",
 		     o->o_name, o->o_outq.mq_msgcnt,
 		     o->o_c_rx, o->o_c_tx, o->o_c_tx_qdrop, o->o_fd);
+#endif
 
 		msgq_lock(&o->o_outq);
 		totqcnt = o->o_outq.mq_msgcnt;
@@ -412,6 +413,10 @@ static void *outputs_main (void *ignore) {
 	struct epoll_event *ev;
 	time_t t_last_check = 0;
 	output_t *o;
+        static int our_rotate_version = 0;
+
+        /* Block all signals in this thread */
+        ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
 
 	ev = malloc(sizeof(*ev) * outputs_cnt);
 
@@ -420,9 +425,9 @@ static void *outputs_main (void *ignore) {
 		time_t now;
 		int i;
 
-		if (unlikely(conf.rotate)) {
+		if (unlikely(conf.rotate != our_rotate_version)) {
 			/* Outputs rotation */
-			conf.rotate = 0; /* FIXME: versioning */
+                        our_rotate_version = conf.rotate;
 			outputs_rotate();
 		} else {
 			/* Periodic outputs checker */

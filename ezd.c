@@ -57,6 +57,7 @@
 #include <signal.h>
 #include <assert.h>
 #include <regex.h>
+#include <stdarg.h>
 
 static char ezd_pidfile_path[PATH_MAX];
 static int  ezd_pidfile_fd = -1;
@@ -65,7 +66,7 @@ static int  ezd_pidfile_fd = -1;
 int ezd_str_tof (const char *val) {
 	char *end;
 	int i;
-	
+
 	i = strtoul(val, &end, 0);
 	if (end > val) /* treat as integer value */
 		return !!i;
@@ -488,4 +489,23 @@ void ezd_daemon_started (void) {
 }
 
 
+
+int ezd_thread_sigmask (int how, ...) {
+	va_list ap;
+	sigset_t set;
+	int sig;
+
+	sigemptyset(&set);
+
+	va_start(ap, how);
+	while ((sig = va_arg(ap, int)) != -1) {
+		if (sig == 0)
+			sigfillset(&set);
+		else
+			sigaddset(&set, sig);
+	}
+	va_end(ap);
+
+	return pthread_sigmask(how, &set, NULL);
+}
 

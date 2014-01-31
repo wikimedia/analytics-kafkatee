@@ -30,6 +30,7 @@
 
 #include "kafkatee.h"
 #include "exec.h"
+#include "ezd.h"
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -272,8 +273,9 @@ static void *exec_main (void *ignore) {
 	struct child_proc *cp;
 
 	/* Install SIGCHLD handler to reap dying child processes */
+        ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
+        ezd_thread_sigmask(SIG_UNBLOCK, SIGCHLD, -1/*end*/);
 	signal(SIGCHLD, sigchld);
-	/* FIXME: unmask sigchld in this thread */
 
 	while (conf.run || child_proc_cnt > 0) {
 		if (!conf.run) {

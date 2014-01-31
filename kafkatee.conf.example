@@ -183,6 +183,27 @@
 # Default: 6 (info)
 #log.level = 7
 
+
+#
+# JSON Statistics
+#
+# Statistics is collected from kafkatee itself(*) as well as librdkafka
+# Each JSON object has a top level key of either 'kafkatee' or
+# 'kafka' to indicate which type of statistics the object contains.
+# Each line is a valid JSON object.
+#
+# *: kafkatee does not currently output any stats of its own, just from rdkafka.
+#
+
+# Statistics output interval
+# Defaults to 60 seconds, use 0 to disable.
+#log.statistics.interval = 60
+
+# Statistics output file
+# Defaults to /tmp/kafkatee.stats.json
+#log.statistics.file = /tmp/kafkatee.stats.json
+
+
 # Command to run on startup, before starting IO.
 # Default: none
 #command.init = ./my-script.sh
