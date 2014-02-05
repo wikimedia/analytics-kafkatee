@@ -106,7 +106,7 @@
 # Offset file directory.
 # Each topic + partition combination has its own offset file.
 # Default: current directory
-#kafka.offset.store.path = /var/run/offsets/
+#kafka.topic.offset.store.path = /var/run/offsets/
 
 # If the request offset was not found on broker, or there is no
 # initial offset known (no stored offset), then reset the offset according
