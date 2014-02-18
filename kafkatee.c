@@ -197,35 +197,34 @@ int main (int argc, char **argv) {
 		}
 	}
 
+	openlog("kafkatee", LOG_PID|LOG_PERROR, LOG_DAEMON);
+
 	/* Read config file */
 	if (ezd_conf_file_read(conf_file_path, conf_set,
 			       errstr, sizeof(errstr), NULL) == -1) {
-		fprintf(stderr, "%s\n", errstr);
+		kt_log(LOG_ERR, "%s", errstr);
 		exit(1);
 	}
 
 	/* Daemonize if desired */
 	if (conf.daemonize) {
 		if (ezd_daemon(10, errstr, sizeof(errstr)) == -1) {
-			fprintf(stderr, "%s\n", errstr);
+			kt_log(LOG_ERR, "%s", errstr);
 			exit(1);
 		}
 	}
 
 	if (ezd_pidfile_open(conf.pid_file_path,
 			     errstr, sizeof(errstr)) == -1) {
-		fprintf(stderr, "%s\n", errstr);
+		kt_log(LOG_ERR, "%s", errstr);
 		exit(1);
 	}
-
-	openlog("kafkatee", LOG_PID|LOG_PERROR, LOG_DAEMON);
 
 
 	/* Parse the format string */
 	if (conf.fconf.format) {
 		if (conf.fconf.encoding != ENC_STRING) {
-			fprintf(stderr,
-				"Output formatting only supported for "
+			kt_log(LOG_ERR, "Output formatting only supported for "
 				"output.encoding = string");
 			ezd_pidfile_close();
 			exit(1);
@@ -233,7 +232,7 @@ int main (int argc, char **argv) {
 
 		if (format_parse(&conf.fconf, conf.fconf.format,
 				 errstr, sizeof(errstr)) == -1) {
-			fprintf(stderr,
+			kt_log(LOG_ERR,
 				"Failed to parse format string: %s\n%s",
 				conf.fconf.format, errstr);
 			ezd_pidfile_close();
@@ -246,8 +245,8 @@ int main (int argc, char **argv) {
 		char tmp[30];
 
 		if (stats_open() == -1) {
-			fprintf(stderr,
-				"Failed to open statistics log file %s: %s\n",
+			kt_log(LOG_ERR,
+				"Failed to open statistics log file %s: %s",
 				conf.stats_file, strerror(errno));
 			ezd_pidfile_close();
 			exit(1);
@@ -302,6 +301,7 @@ int main (int argc, char **argv) {
 	signal(SIGINT, term);
 	signal(SIGTERM, term);
 
+	kt_log(LOG_INFO, "kafkatee starting");
 	/* Main loop */
 	while (conf.run) {
 		rd_kafka_poll(conf.rk, 1000);
@@ -334,5 +334,6 @@ int main (int argc, char **argv) {
 
 	ezd_pidfile_close();
 
+	kt_log(LOG_INFO, "kafkatee exiting");
 	exit(conf.exit_code);
 }
