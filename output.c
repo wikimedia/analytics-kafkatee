@@ -356,10 +356,11 @@ static void outputs_check (void) {
 
 		/* Already open */
 		if (o->o_fd != -1) {
-			if (o->o_pipe.status != -1)
-				output_close(o, LOG_WARNING,
-					     exec_exitstatus(o->o_pipe.status));
-			continue;
+                        if (o->o_type == OUTPUT_PIPE &&
+                            o->o_pipe.status != -1)
+                                output_close(o, LOG_WARNING,
+                                             exec_exitstatus(o->o_pipe.status));
+                        continue;
 		}
 
 		/* Last open failed: back off */
