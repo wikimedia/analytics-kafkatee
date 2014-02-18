@@ -297,7 +297,7 @@ static int jp_bool (void *opaque, int val) {
 
 
 static int jp_number (void *opaque, const char *numval,
-                      YAJL_SIZE_TYPE numlen) {
+					YAJL_SIZE_TYPE numlen) {
 	struct json_parse_ctx *jp = opaque;
 
 	_JP_CHECK();
@@ -307,7 +307,7 @@ static int jp_number (void *opaque, const char *numval,
 
 
 static int jp_string (void *opaque, const unsigned char *val,
-                      YAJL_SIZE_TYPE len) {
+			YAJL_SIZE_TYPE len) {
 	struct json_parse_ctx *jp = opaque;
 
 	_JP_CHECK();
@@ -323,7 +323,7 @@ static int jp_start_map (void *opaque) {
 
 
 static int jp_map_key (void *opaque, const unsigned char *key,
-                       YAJL_SIZE_TYPE len) {
+					YAJL_SIZE_TYPE len) {
 	struct json_parse_ctx *jp = opaque;
 	const struct fmtvar *fmtvar;
 

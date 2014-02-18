@@ -183,8 +183,8 @@ int kt_popen (const char *cmdstring, const char *rw,
 	}
 
 	/* Execute command */
-        execl("/bin/sh", "sh", "-c", cmdstring, NULL);
-        _exit(127);
+	execl("/bin/sh", "sh", "-c", cmdstring, NULL);
+	_exit(127);
 }
 
 
@@ -273,8 +273,8 @@ static void *exec_main (void *ignore) {
 	struct child_proc *cp;
 
 	/* Install SIGCHLD handler to reap dying child processes */
-        ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
-        ezd_thread_sigmask(SIG_UNBLOCK, SIGCHLD, -1/*end*/);
+	ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
+	ezd_thread_sigmask(SIG_UNBLOCK, SIGCHLD, -1/*end*/);
 	signal(SIGCHLD, sigchld);
 
 	while (conf.run || child_proc_cnt > 0) {

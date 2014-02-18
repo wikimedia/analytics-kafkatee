@@ -299,7 +299,7 @@ int ezd_conf_file_read (const char *path,
 					 "Failed to read include file pattern '%s'", t);
 				inc_depth--;
 				return -1;
-            }
+			}
 
 			/* For each matched include file, call ezd_conf_file_read. */
 			for (g = 0; g < glob_matches.gl_pathc; g++) {

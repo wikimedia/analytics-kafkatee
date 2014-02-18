@@ -42,7 +42,7 @@
 #include "ezd.h"
 
 static void sighup (int sig) {
-        static int rotate_version = 0;
+	static int rotate_version = 0;
 	conf.rotate = ++rotate_version;
 }
 
@@ -74,11 +74,11 @@ static void kafka_error_cb (rd_kafka_t *rk, int err,
  * Kafka statistics callback.
  */
 static int kafka_stats_cb (rd_kafka_t *rk, char *json, size_t json_len,
-			    void *opaque) {
-        if (!conf.stats_fp)
-                return 0;
+			void *opaque) {
+	if (!conf.stats_fp)
+		return 0;
 
-        fprintf(conf.stats_fp, "{ \"kafka\": %s }\n", json);
+	fprintf(conf.stats_fp, "{ \"kafka\": %s }\n", json);
 	return 0;
 }
 
@@ -86,28 +86,28 @@ static int kafka_stats_cb (rd_kafka_t *rk, char *json, size_t json_len,
  * Output kafkatee specific stats to statsfile.
  */
 static void stats_print (void) {
-        /* FIXME: Currently none */
+	/* FIXME: Currently none */
 }
 
 static void stats_close (void) {
-        stats_print();
-        fclose(conf.stats_fp);
-        conf.stats_fp = NULL;
+	stats_print();
+	fclose(conf.stats_fp);
+	conf.stats_fp = NULL;
 }
 
 static int stats_open (void) {
-        /* Already open? close and then reopen */
-        if (conf.stats_fp)
-                stats_close();
+	/* Already open? close and then reopen */
+	if (conf.stats_fp)
+		stats_close();
 
-        if (!(conf.stats_fp = fopen(conf.stats_file, "a"))) {
-                kt_log(LOG_ERR,
-                       "Failed to open statistics log file %s: %s",
-                       conf.stats_file, strerror(errno));
-                return -1;
-        }
+	if (!(conf.stats_fp = fopen(conf.stats_file, "a"))) {
+		kt_log(LOG_ERR,
+		"Failed to open statistics log file %s: %s",
+		conf.stats_file, strerror(errno));
+		return -1;
+	}
 
-        return 0;
+	return 0;
 }
 
 
@@ -142,7 +142,7 @@ int main (int argc, char **argv) {
 	char errstr[512];
 	char c;
 	int r;
-        static int our_rotate_version = 0;
+	static int our_rotate_version = 0;
 
 	/*
 	 * Default configuration
@@ -245,7 +245,7 @@ int main (int argc, char **argv) {
 	if (conf.stats_interval) {
 		char tmp[30];
 
-                if (stats_open() == -1) {
+		if (stats_open() == -1) {
 			fprintf(stderr,
 				"Failed to open statistics log file %s: %s\n",
 				conf.stats_file, strerror(errno));
@@ -287,17 +287,17 @@ int main (int argc, char **argv) {
 			       "with exit code %i", conf.cmd_init, r);
 	}
 
-        /* Block all signals in the main thread so new threads get the same
-         * procmask. */
-        ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
+	/* Block all signals in the main thread so new threads get the same
+	* procmask. */
+	ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
 
 	/* Start IO */
 	outputs_start();
 	inputs_start();
 
 
-        /* Set main thread sigmask */
-        ezd_thread_sigmask(SIG_UNBLOCK, SIGHUP, SIGINT, SIGTERM, -1);
+	/* Set main thread sigmask */
+	ezd_thread_sigmask(SIG_UNBLOCK, SIGHUP, SIGINT, SIGTERM, -1);
 	signal(SIGHUP, sighup);
 	signal(SIGINT, term);
 	signal(SIGTERM, term);
@@ -305,12 +305,12 @@ int main (int argc, char **argv) {
 	/* Main loop */
 	while (conf.run) {
 		rd_kafka_poll(conf.rk, 1000);
-                if (unlikely(conf.rotate != our_rotate_version)) {
-                        our_rotate_version = conf.rotate;
-                        if (conf.stats_interval)
-                                stats_open();
-                }
-        }
+		if (unlikely(conf.rotate != our_rotate_version)) {
+			our_rotate_version = conf.rotate;
+			if (conf.stats_interval)
+				stats_open();
+		}
+	}
 
 	inputs_term();
 	outputs_term();
@@ -321,7 +321,7 @@ int main (int argc, char **argv) {
 
 	/* if stats_fp is set (i.e. open), close it. */
 	if (conf.stats_fp)
-                stats_close();
+		stats_close();
 	free(conf.stats_file);
 
 	/* Run termination command, if any. */
