@@ -9,7 +9,7 @@ Vcs-Browser: http://git.wikimedia.org/tree/analytics%2Fkafkatee
 
 Package: kafkatee
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser
 Description: Apache Kafka consumer with multiple inputs and outputs
  kafkatee consumes messages from one or more Kafka topics and writes
  the messages to one or more outputs - either command pipes or files.

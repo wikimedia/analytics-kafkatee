@@ -1,3 +1,9 @@
+kafkatee (0.1.1-1) unstable; urgency=low
+
+  * Changes to logging during kafkatee startup
+
+ -- Andrew Otto (WMF) <otto@wikimedia.org>  Thu, 20 Feb 2014 17:24:28 +0000
+
 kafkatee (0.1.0-1) unstable; urgency=low
 
   * Initial release
