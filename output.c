@@ -356,11 +356,11 @@ static void outputs_check (void) {
 
 		/* Already open */
 		if (o->o_fd != -1) {
-                        if (o->o_type == OUTPUT_PIPE &&
-                            o->o_pipe.status != -1)
-                                output_close(o, LOG_WARNING,
-                                             exec_exitstatus(o->o_pipe.status));
-                        continue;
+			if (o->o_type == OUTPUT_PIPE &&
+				o->o_pipe.status != -1)
+					output_close(o, LOG_WARNING,
+			exec_exitstatus(o->o_pipe.status));
+			continue;
 		}
 
 		/* Last open failed: back off */
@@ -414,10 +414,10 @@ static void *outputs_main (void *ignore) {
 	struct epoll_event *ev;
 	time_t t_last_check = 0;
 	output_t *o;
-        static int our_rotate_version = 0;
+	static int our_rotate_version = 0;
 
-        /* Block all signals in this thread */
-        ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
+	/* Block all signals in this thread */
+	ezd_thread_sigmask(SIG_BLOCK, 0/*ALL*/, -1/*end*/);
 
 	ev = malloc(sizeof(*ev) * outputs_cnt);
 
@@ -428,7 +428,7 @@ static void *outputs_main (void *ignore) {
 
 		if (unlikely(conf.rotate != our_rotate_version)) {
 			/* Outputs rotation */
-                        our_rotate_version = conf.rotate;
+			our_rotate_version = conf.rotate;
 			outputs_rotate();
 		} else {
 			/* Periodic outputs checker */
