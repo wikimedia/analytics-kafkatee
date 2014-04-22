@@ -1,3 +1,9 @@
+kafkatee (0.1.2-1) unstable; urgency=low
+
+  * Fix for fflush of log.statistics.file
+
+ -- Andrew Otto (WMF) <otto@wikimedia.org>  Tue, 22 Apr 2014 17:50:09 +0000
+
 kafkatee (0.1.1-1) unstable; urgency=low
 
   * Changes to logging during kafkatee startup
