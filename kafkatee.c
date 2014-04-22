@@ -79,6 +79,14 @@ static int kafka_stats_cb (rd_kafka_t *rk, char *json, size_t json_len,
 		return 0;
 
 	fprintf(conf.stats_fp, "{ \"kafka\": %s }\n", json);
+	/* flush stats_fp to make sure valid JSON data
+	(e.g. full lines with closing object brackets)
+	is written to disk */
+	if (fflush(conf.stats_fp)) {
+		kt_log(LOG_ERR,
+			"Failed to fflush log.statistics.file %s: %s",
+			conf.stats_file, strerror(errno));
+	}
 	return 0;
 }
 
