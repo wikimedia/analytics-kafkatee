@@ -13,7 +13,7 @@
 /var/cache/kafkatee/kafkatee.stats.json {
   weekly
   rotate 4
-  create 0644 varnishlog root
+  create 0644 kafkatee root
   missingok
   compress
   delaycompress
