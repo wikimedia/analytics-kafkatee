@@ -62,6 +62,7 @@ struct tmpbuf {
  * This is a destructive operation, the original data will be lost.
  */
 static void render_scratch_resize (struct render *render, int size) {
+	assert( size >= 0 );
 	if (render->scratch_size < size) {
 		if (render->scratch)
 			free(render->scratch);
@@ -186,7 +187,9 @@ static size_t       const_string_len  = 0;
 static char *const_string_add (const char *in, int inlen) {
 	char *ret;
 	const char *instr = strndupa(in, inlen);
-	
+
+	assert( inlen >= 0 );
+
 	if (!(ret = strstr(const_string, instr))) {
 		assert(const_string_len + inlen < CONST_STRING_SIZE);
 
