@@ -25,7 +25,7 @@ case "$1" in
         chown -R kafkatee:kafkatee /var/run/kafkatee
 
         # force rsyslog to create /var/log/kafkatee.log on install.
-        service restart rsyslog
+        service rsyslog restart
 
         echo \
 "NOTE: Default kafkatee config files have been installed at:
