@@ -1,8 +1,14 @@
+kafkatee (0.1.3-2) unstable; urgency=low
+
+  * Fix for kafkatee.postinst in Jessie - use service command for restarting rsyslog
+
+ -- Andrew Otto (WMF) <otto@wikimedia.org>  Wed, 29 Apr 2015 17:00:00 +0000
+
 kafkatee (0.1.3-1) unstable; urgency=low
 
   * Assert lengths aren't negative
 
- -- Andrew Otto (WMF) <otto@wikimedia.org>  Tue, 27 Apr 2015 17:00:00 +0000
+ -- Andrew Otto (WMF) <otto@wikimedia.org>  Mon, 27 Apr 2015 17:00:00 +0000
 
 kafkatee (0.1.2-1) unstable; urgency=low
 
