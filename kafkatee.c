@@ -220,12 +220,12 @@ int main (int argc, char **argv) {
 			kt_log(LOG_ERR, "%s", errstr);
 			exit(1);
 		}
-	}
 
-	if (ezd_pidfile_open(conf.pid_file_path,
-			     errstr, sizeof(errstr)) == -1) {
-		kt_log(LOG_ERR, "%s", errstr);
-		exit(1);
+		if (ezd_pidfile_open(conf.pid_file_path,
+				     errstr, sizeof(errstr)) == -1) {
+			kt_log(LOG_ERR, "%s", errstr);
+			exit(1);
+		}
 	}
 
 
@@ -234,7 +234,8 @@ int main (int argc, char **argv) {
 		if (conf.fconf.encoding != ENC_STRING) {
 			kt_log(LOG_ERR, "Output formatting only supported for "
 				"output.encoding = string");
-			ezd_pidfile_close();
+			if (conf.daemonize)
+				ezd_pidfile_close();
 			exit(1);
 		}
 
@@ -243,7 +244,8 @@ int main (int argc, char **argv) {
 			kt_log(LOG_ERR,
 				"Failed to parse format string: %s\n%s",
 				conf.fconf.format, errstr);
-			ezd_pidfile_close();
+			if (conf.daemonize)
+				ezd_pidfile_close();
 			exit(1);
 		}
 	}
@@ -256,7 +258,8 @@ int main (int argc, char **argv) {
 			kt_log(LOG_ERR,
 				"Failed to open statistics log file %s: %s",
 				conf.stats_file, strerror(errno));
-			ezd_pidfile_close();
+			if (conf.daemonize)
+				ezd_pidfile_close();
 			exit(1);
 		}
 
@@ -272,7 +275,8 @@ int main (int argc, char **argv) {
 				     errstr, sizeof(errstr)))) {
 		kt_log(LOG_ERR,
 		       "Failed to create kafka handle: %s", errstr);
-		ezd_pidfile_close();
+		if (conf.daemonize)
+			ezd_pidfile_close();
 		exit(1);
 	}
 
@@ -340,7 +344,8 @@ int main (int argc, char **argv) {
 			       "with exit code %i", conf.cmd_term, r);
 	}
 
-	ezd_pidfile_close();
+	if (conf.daemonize)
+		ezd_pidfile_close();
 
 	kt_log(LOG_INFO, "kafkatee exiting");
 	exit(conf.exit_code);
