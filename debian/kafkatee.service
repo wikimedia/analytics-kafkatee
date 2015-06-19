@@ -1,20 +1,13 @@
 [Unit]
-Description=kafkatee - Apache Kafka consumer with multiple inputs and outputs
-After=network.target local-fs.target
+Description=kafkatee
+After=local-fs.target
+After=network.target
 
 [Service]
 Type=simple
 User=kafkatee
-
 ExecStart=/usr/bin/kafkatee -D -c /etc/kafkatee.conf
 ExecReload=/bin/kill -HUP $MAINPID
-
-# If running with inactive piped inputs (unlikely)
-# kafkatee may not clean up properly after itself.
-# Manually remove the pid file so that kafkatee will
-# start up properly next time.
-ExecStopPost=/usr/bin/test -f /var/run/kafkatee/kafkatee.pid && /bin/rm /var/run/kafkatee/kafkatee.pid
-
 Restart=on-failure
 
 [Install]
