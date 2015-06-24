@@ -1,7 +1,10 @@
-kafkatee (0.1.3-3) unstable; urgency=low
+kafkatee (0.1.4-1) unstable; urgency=low
 
   * Remove kafkatee.service's syntactically incorrect and redundant
     ExecStopPost.
+
+  * kafkatee will no longer write pid files when not daemonized.
+    This works better with systemd.
 
  -- Faidon Liambotis <faidon@wikimedia.org>  Fri, 19 Jun 2015 17:25:42 +0300
 
