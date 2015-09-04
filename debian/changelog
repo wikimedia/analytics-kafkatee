@@ -1,3 +1,9 @@
+kafkatee (0.1.4-2) unstable; urgency=low
+
+  * Add kafkatee.upstart for easier use with Ubuntu Trusty.
+
+ -- Andrew Otto (WMF) <otto@wikimedia.org>  Fri, 04 Sep 2015 18:39:10 +0000
+
 kafkatee (0.1.4-1) unstable; urgency=low
 
   * Remove kafkatee.service's syntactically incorrect and redundant
