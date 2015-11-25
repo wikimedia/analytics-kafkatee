@@ -85,6 +85,27 @@ static void input_stopped (input_t *in) {
 
 
 /**
+ * Remove and free a input
+ */
+void input_delete(input_t *in) {
+	LIST_REMOVE(in, in_link);
+	input_stopped(in);
+
+	switch (in->in_type)
+	{
+	case INPUT_PIPE:
+		free(in->in_pipe.cmd);
+		break;
+
+	case INPUT_KAFKA:
+		free(in->in_kafka.topic);
+		break;
+	}
+	free(in);
+}
+
+
+/**
  * Pipe input: main loop
  */
 static void input_pipe_main (input_t *in) {
@@ -327,10 +348,11 @@ void input_wait_stopped (input_t *in) {
  * Start input.
  */
 int input_start (input_t *in) {
+	int err = 0;
 
-	if (pthread_create(&in->in_thread, NULL, input_main, in) == 1) {
+	if ((err = pthread_create(&in->in_thread, NULL, input_main, in)) != 0) {
 		kt_log(LOG_ERR,
-		       "Failed to start input thread: %s", strerror(errno));
+		       "Failed to start input thread: %s", strerror(err));
 		input_stopped(in);
 		return -1;
 	}
@@ -364,8 +386,17 @@ void inputs_start (void) {
 	}
 
 	LIST_FOREACH(in, &inputs, in_link) {
-		if (input_start(in) == -1)
+		if (input_start(in) == -1) {
+			conf.run = 0;
+			inputs_term();
+			
+			while (!LIST_EMPTY(&inputs)) {
+				in = LIST_FIRST(&inputs);
+				input_delete(in);
+			}
+
 			exit(1);
+		}
 	}
 
 }
