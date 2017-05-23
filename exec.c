@@ -119,8 +119,9 @@ int kt_popen (const char *cmdstring, const char *rw,
 	      pid_t *pidp, int *statusp,
 	      char *errstr, size_t errstr_size) {
 
-	int pfd[2];
+	int pfd[2], i;
 	pid_t pid;
+	struct sigaction sig_action;
 
 	/* Create pipe fds */
 	if (pipe2(pfd, O_CLOEXEC) == -1) {
@@ -181,6 +182,18 @@ int kt_popen (const char *cmdstring, const char *rw,
 			close(pfd[1]);
 		}
 	}
+
+
+	/* Reset signal disposition and unblock signals for children */
+	memset(&sig_action, 0, sizeof(sig_action));
+	sig_action.sa_handler = SIG_DFL;
+	sig_action.sa_flags = 0;
+	sigemptyset(&sig_action.sa_mask);
+	for (i = 1 ; i < NSIG ; i++) {
+		sigaction(i, &sig_action, NULL);
+	}
+
+	ezd_thread_sigmask(SIG_UNBLOCK, 0, -1);
 
 	/* Execute command */
 	execl("/bin/sh", "sh", "-c", cmdstring, NULL);
