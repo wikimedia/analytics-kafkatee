@@ -1,3 +1,9 @@
+kafkatee (0.1.5-1) unstable; urgency=medium
+
+  * Unblock signals in children processes, fixes cleanup of shell pipelines.
+
+ -- Filippo Giunchedi <filippo@wikimedia.org>  Tue, 23 May 2017 12:13:00 +0200
+
 kafkatee (0.1.4-2) unstable; urgency=low
 
   * Add kafkatee.upstart for easier use with Ubuntu Trusty.
