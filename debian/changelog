@@ -1,3 +1,10 @@
+kafkatee (0.1.6-1) unstable; urgency=medium
+
+  * Remove logrotate and syslog configuration (will be handled by
+    external config management like puppet).
+
+ -- Luca Toscano <ltoscano@wikimedia.org>  Fri, 30 Jun 2017 12:13:00 +0200
+
 kafkatee (0.1.5-1) unstable; urgency=medium
 
   * Unblock signals in children processes, fixes cleanup of shell pipelines.
