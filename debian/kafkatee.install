@@ -1,3 +1,4 @@
 kafkatee                            usr/bin
 debian/etc/kafkatee.conf            etc
 debian/etc/kafkatee.d/README        etc/kafkatee.d
+debian/75-kafkatee.conf             etc/rsyslog.d
