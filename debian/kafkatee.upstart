@@ -1,4 +1,4 @@
-description "kafkatee
+description "kafkatee"
 
 setuid kafkatee
 setgid kafkatee
