@@ -5,7 +5,7 @@ Maintainer: Andrew Otto (WMF) <otto@wikimedia.org>
 Build-Depends: debhelper (>= 9), dh-systemd (>= 1.5), librdkafka-dev (>= 0.8.3), libyajl-dev, zlib1g-dev (>= 1:1.2.8)
 Standards-Version: 3.9.5
 Vcs-Git: https://gerrit.wikimedia.org/r/analytics/kafkatee
-Vcs-Browser: http://git.wikimedia.org/tree/analytics%2Fkafkatee
+Vcs-Browser: https://phabricator.wikimedia.org/diffusion/ANKA/
 
 Package: kafkatee
 Architecture: any
