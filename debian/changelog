@@ -1,3 +1,16 @@
+kafkatee (0.1.7-1) unstable; urgency=medium
+
+  * Set Maintainer to ops, add myself to Uploaders.
+  * Bump debhelper compatibility level to 11.
+  * Bump Standards-Versions to 4.1.3.
+  * Remove the kafkatee upstart script, Upstart is deprecated.
+  * Don't create (or remove) /var/run/kafkatee anymore, not used by the
+    package and wasn't set up properly anyway.
+  * Drop versioned Build-Depends to pre-jessie versions.
+  * Fix indentation of the extended description.
+
+ -- Faidon Liambotis <faidon@wikimedia.org>  Tue, 16 Jan 2018 16:41:39 +0200
+
 kafkatee (0.1.6-1) unstable; urgency=medium
 
   * Remove logrotate and syslog configuration (will be handled by
