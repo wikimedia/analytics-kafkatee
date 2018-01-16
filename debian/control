@@ -19,12 +19,11 @@ Description: Apache Kafka consumer with multiple inputs and outputs
  rate.
  .
  Features:
- .
- - Supported input types: Kafka consumer or piped command.
- - Supported output types: Piped command or file.
- - Configuration file syntax is backwards compatible with Wikimedia's udp2log
- - Configurable output queue size
- - Memory frugal: message payload is shared by all output queues
- - Configured with configuration file
- - Operates as a daemon (daemonization, pidfile)
- - Closes/stops and reopens/restarts all inputs and outputs on SIGHUP.
+  * Supported input types: Kafka consumer or piped command.
+  * Supported output types: Piped command or file.
+  * Configuration file syntax is backwards compatible with Wikimedia's udp2log
+  * Configurable output queue size
+  * Memory frugal: message payload is shared by all output queues
+  * Configured with configuration file
+  * Operates as a daemon (daemonization, pidfile)
+  * Closes/stops and reopens/restarts all inputs and outputs on SIGHUP.
