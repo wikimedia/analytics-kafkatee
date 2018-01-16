@@ -45,7 +45,7 @@
 #include <librdkafka/rdkafka.h>
 
 #define KAFKATEE_CONF_PATH     "/etc/kafkatee.conf"
-#define KAFKATEE_PID_FILE_PATH "/var/run/kafkatee.pid"
+#define KAFKATEE_PID_FILE_PATH "/run/kafkatee.pid"
 
 #define _DBG(fmt...) do {			\
 	if (conf.log_level > 6) {		\

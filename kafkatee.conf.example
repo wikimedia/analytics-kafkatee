@@ -33,7 +33,7 @@
 #######################################################################
 
 # Pid file location
-# Default: /var/run/kafkatee.pid
+# Default: /run/kafkatee.pid
 #pid.file.path = kafkatee.pid
 
 # Daemonize (background)
@@ -106,7 +106,7 @@
 # Offset file directory.
 # Each topic + partition combination has its own offset file.
 # Default: current directory
-#kafka.topic.offset.store.path = /var/run/offsets/
+#kafka.topic.offset.store.path = /var/cache/kafkatee/offsets/
 
 # If the request offset was not found on broker, or there is no
 # initial offset known (no stored offset), then reset the offset according
