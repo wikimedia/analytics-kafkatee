@@ -10,7 +10,6 @@ case "$1" in
     purge)
         rm -f /var/log/kafkatee.log*
         rm -rf /var/cache/kafkatee
-        rm -rf /var/run/kafkatee
 
         deluser --quiet --system kafkatee >/dev/null || true
         deluser --quiet --group --system --only-if-empty --remove-home kafkatee || true

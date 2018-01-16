@@ -20,9 +20,8 @@ case "$1" in
                 kafkatee >/dev/null 2>/dev/null || :
         fi
 
-        # chown /var/cache/kafkatee and /var/run/kafkatee for writing
+        # chown /var/cache/kafkatee for writing
         chown -R kafkatee:kafkatee /var/cache/kafkatee
-        chown -R kafkatee:kafkatee /var/run/kafkatee
 
         echo \
 "NOTE: Default kafkatee config files have been installed at:
