@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define __need_IOV_MAX
+#define _GNU_SOURCE
 
 #include "kafkatee.h"
 #include "queue.h"
@@ -43,6 +43,7 @@
 #include <assert.h>
 #include <sys/socket.h>
 #include <signal.h>
+#include <limits.h>
 
 
 static LIST_HEAD(, output_s) outputs; /* Sorted in sample-rate order */
