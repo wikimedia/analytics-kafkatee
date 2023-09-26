@@ -205,7 +205,7 @@ static void input_pipe_main (input_t *in) {
 	}
 
 	if (fp)
-		pclose(fp);
+		fclose(fp);
 
 	free(buf);
 }
